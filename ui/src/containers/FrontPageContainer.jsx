@@ -69,13 +69,12 @@ export default class FrontPage extends Component {
         return response.json();
       }
       throw response;
-    }).then((resp) => {
-      this.setState({ formVisible: true, licensePlate: resp.plate, carUid: resp.uid });
-      
+    }).then((resp) => {      
       if (resp.isNew) {
+        this.setState({ formVisible: true, licensePlate: resp.plate, carUid: resp.uid });
         message.success("A matrícula da imagem foi carregada com sucesso!");
       } else {
-        message.info("Atualizar matrícula!");
+        message.info("A matrícula já existe!");
       }
 
       onSuccess(resp, file);

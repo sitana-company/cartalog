@@ -68,7 +68,10 @@ class CarsCreateForm extends Component {
                   message: "Por favor escolha o modelo do carro!"
                 }
               ]
-            })(<CarsAutoComplete onSelect={ (value) => this.setState({ modelUid: value}) }/>)}
+            })(<CarsAutoComplete onSelect={(value) => {
+              alert(value);
+              this.setState({ modelUid: value})
+            } }/>)}
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
