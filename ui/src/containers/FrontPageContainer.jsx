@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 
-import MyButton from "../components/MyButton.jsx";
-
-import CarsAutoComplete from '../components/cars/CarsAutoComplete.jsx';
-
-import CarsList from '../components/cars/CarsList.jsx';
-
-import CarsChart from '../components/cars/CarsChart.jsx';
-
-import styles from "./DashboardContainer.less";
+import { Upload } from 'antd';
 
 export default class FrontPage extends Component {
     constructor(props) {
@@ -50,7 +42,8 @@ export default class FrontPage extends Component {
         const { counter } = this.state;
         return (
             <div className="my-dashboard">
-                <b>Hello margaret</b>
+                <b>Hello person</b>
+                <Upload></Upload>
             </div>
         );
     }
