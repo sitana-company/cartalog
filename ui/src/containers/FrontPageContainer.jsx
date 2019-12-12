@@ -1,50 +1,69 @@
 import React, { Component } from "react";
 
-import { Upload } from 'antd';
+import { Upload, Icon, Modal } from "antd";
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+}
 
 export default class FrontPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            counter: 0
-        };
-        this.button = React.createRef();
-        this.click = this.click.bind(this);
-        this.selectCar = this.selectCar.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      previewVisible: false,
+      previewImage: '',
+      fileList: []
+    };
+  }
+
+  handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
     }
 
-    componentWillMount() {
-        /*
-        // Sample of service AJAX call:
-        fetch('/services/my-test.netuno', {
-            credentials: 'include'
-        }).then((response) => {
-            return response.json();
-        }).then((json) => {
-            // json...;
-        });
-        */
-    }
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+    });
+  };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        $(this.button.current).fadeOut(250).fadeIn(250);
-    }
+  beforeUpload = ({ fileList }) => this.setState({ fileList });
 
-    click() {
-        this.setState({ counter: this.state.counter + 1, aaa: 12 });
-    }
+  handleChange = ({ fileList }) => this.setState({ fileList });
 
-    selectCar(value) {
-        alert(value);
-    }
+  handleCancel = () => this.setState({ previewVisible: false });
 
-    render() {
-        const { counter } = this.state;
-        return (
-            <div className="my-dashboard">
-                <b>Hello person</b>
-                <Upload></Upload>
-            </div>
-        );
-    }
+  render() {
+    const { previewVisible, previewImage, fileList } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+
+    return (
+      <div className="my-dashboard">
+        <h1>Bem-vindo ao CartaLog</h1>
+        <Upload
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          listType="picture-card"
+          fileList={fileList}
+          beforeUpload={beforeUpload}
+          onPreview={this.handlePreview}
+          onChange={this.handleChange}
+        >
+          {fileList.length >= 8 ? null : uploadButton}
+        </Upload>
+        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        </Modal>
+      </div>
+    );
+  }
 }

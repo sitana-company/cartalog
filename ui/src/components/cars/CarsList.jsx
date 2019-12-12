@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Table } from 'antd';
 
+var _ = require('lodash');
+
 const CarsList = ({ }) => {
     const [ initialized, setInitialized ] = useState(false);
     const [ loading, setLoading ] = useState(false);
@@ -41,6 +43,10 @@ const CarsList = ({ }) => {
         }).then((response) => {
             return response.json();
         }).then((json) => {
+            if (_.isObject(json.items)) {
+                json.items = [];
+            }
+
             setLoading(false);
             setDataSource(json.items);
             pagination.total = json.total;
@@ -67,7 +73,7 @@ const CarsList = ({ }) => {
             setInitialized(true);
         }
     });
-
+    console.log(dataSource);
     return <div>
         <Table
             columns={columns}
