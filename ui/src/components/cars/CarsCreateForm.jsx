@@ -15,7 +15,7 @@ class CarsCreateForm extends Component {
 
     this.props.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+          //console.log('Received values of form: ', values);
           const data = new FormData();
           data.append('carro_uid', this.props.carUid);
           data.append('modelo_uid', this.state.modelUid);
@@ -32,7 +32,7 @@ class CarsCreateForm extends Component {
             message.success('Matrícula adicionada com sucesso!');
             this.props.onCancel();
           }).catch((error) => {
-            alert("ERROR");
+            //alert("ERROR");
           });
         }
     });
@@ -69,7 +69,6 @@ class CarsCreateForm extends Component {
                 }
               ]
             })(<CarsAutoComplete onSelect={(value) => {
-              alert(value);
               this.setState({ modelUid: value})
             } }/>)}
           </Form.Item>

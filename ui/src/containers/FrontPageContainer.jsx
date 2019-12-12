@@ -48,7 +48,6 @@ export default class FrontPage extends Component {
   };
 
   handleChange = ({ fileList }) => {
-    console.log(fileList);
     this.setState({ fileList });
   };
 
