@@ -1,10 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import DashboardContainer from "./containers/DashboardContainer.jsx";
+import FrontPageContainer from "./containers/FrontPageContainer.jsx";
 
 const dashboardDiv = document.getElementById("app-dashboard");
 
 const dashboardContainer = dashboardDiv ? ReactDOM.render(<DashboardContainer />, dashboardDiv) : false;
+
+const frontendDiv = document.getElementById("front-page");
+const frontpageContainer = frontendDiv ? ReactDOM.render(<DashboardContainer />, frontendDiv) : false;
+
 
 netuno.addNavigationLoad(() => {
     $('[netuno-navigation]').find('a').on('netuno:click', (e)=> {
