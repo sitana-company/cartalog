@@ -110,7 +110,8 @@ export default class FrontPage extends Component {
         <Content style={{ padding: '0 20px', marginTop: 64, minHeight: "calc(100vh - 135px)"}}>
           <Row style={{ padding: "30px 0px" }}>
             <Col xs={{span: 24}} sm={{span: 24}} md={{span: 10, offset: 8}} >
-              <Card title={<h1>Bem-vindo ao CartaLog</h1>} bordered={false}>
+              <Card title={<h1>Bem-vindo ao Cartalog.</h1>} bordered={false}>
+                <p>Carregue uma fotografia de carros:</p>
                 <Upload
                   customRequest={this.customRequest}
                   accept="image/*"

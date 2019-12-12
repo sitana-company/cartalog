@@ -11,7 +11,7 @@ config/_development.json
 config/_production.json
 
 storage/database/*
-storage/public/car/photos/*.jpg
+storage/filesystem/public/cars/photos/*.jpg
 trash/*
 dbs/*
 
