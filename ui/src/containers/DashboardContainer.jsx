@@ -53,9 +53,6 @@ export default class DashboardContainer extends Component {
                 <CarsAutoComplete onSelect={ this.selectCar } />
                 <CarsList />
                 <CarsChart />
-                <div className={ styles.myDashboardButton }>
-                    <MyButton mainRef={ this.button } text={ `XPTOOO Click me! ${ counter }` } click={ this.click } />
-                </div>
             </div>
         );
     }

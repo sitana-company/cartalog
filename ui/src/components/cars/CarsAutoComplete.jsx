@@ -14,7 +14,7 @@ const CarsAutoComplete = ({ onSelect }) => {
             return response.json();
         }).then((json) => {
             setDataSource(json.map((car) => {
-                return <Option key={car.uid}>{ `${car.brand} > ${car.model} > ${car.plate}` }</Option>
+                return <Option key={car.uid}>{ `${car.brand} > ${car.model}` }</Option>
             }));
         });
     };

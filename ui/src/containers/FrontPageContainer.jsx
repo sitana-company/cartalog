@@ -70,10 +70,18 @@ export default class FrontPage extends Component {
       }
       throw response;
     }).then((resp) => {
-      this.setState({ formVisible: true, licensePlate: "TE-ST-E0", carUid: "testeuid" });
-      message.error("A matrícula da imagem foi carregada com sucesso!");
+      this.setState({ formVisible: true, licensePlate: resp.plate, carUid: resp.uid });
+      
+      if (resp.isNew) {
+        message.success("A matrícula da imagem foi carregada com sucesso!");
+      } else {
+        message.info("Atualizar matrícula!");
+      }
+
       onSuccess(resp, file);
-    }).catch(onError);
+    }).catch(() => {
+        message.error("Não foi possível encontrar nenhuma matrícula!");
+    });
   }
 
   render() {

@@ -15,11 +15,10 @@ class CarsCreateForm extends Component {
 
     this.props.form.validateFields((err, values) => {
         if (!err) {
-          alert("nenhum erro");
           console.log('Received values of form: ', values);
           const data = new FormData();
-          data.append('uid', this.props.carUid);
-          data.append('modelo_id', values.modelo_id);
+          data.append('carro_uid', this.props.carUid);
+          data.append('modelo_uid', this.state.modelUid);
 
           fetch('/api/cars/update', {
             method: 'POST',
@@ -59,23 +58,17 @@ class CarsCreateForm extends Component {
         >
           <Form.Item label="Matrícula">
             {getFieldDecorator("car_license_plate", {
-              initialValue: licensePlate,
-              rules: [
-                {
-                  required: true
-                }
-              ]
+              initialValue: licensePlate
             })(<Input disabled />)}
           </Form.Item>
           <Form.Item label="Modelo">
-            {getFieldDecorator("modelo_id", {
+            {getFieldDecorator("modelo_uid", {
               rules: [
                 {
-                  required: true,
                   message: "Por favor escolha o modelo do carro!"
                 }
               ]
-            })(<CarsAutoComplete></CarsAutoComplete>)}
+            })(<CarsAutoComplete onSelect={ (value) => this.setState({ modelUid: value}) }/>)}
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
