@@ -7,12 +7,13 @@ node_modules/
 .vscode
 package-lock.json
 
-/storage/*
-/trash/*
+config/_development.json
+config/_production.json
+
+storage/*
+trash/*
+dbs/*
 
 *~*
 *#*
-
-config/_development.json
-config/_production.json
 
