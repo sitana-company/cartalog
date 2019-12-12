@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
-import { Upload, Icon, Modal } from "antd";
+import { Upload, Icon, Modal, message } from "antd";
+
+import CarsCreateForm from "../components/cars/CarsCreateForm.jsx";
 
 function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -16,8 +18,10 @@ export default class FrontPage extends Component {
     super(props);
     this.state = {
       previewVisible: false,
-      previewImage: '',
-      fileList: []
+      previewImage: "",
+      licensePlate: "",
+      fileList: [],
+      formVisible: false,
     };
   }
 
@@ -32,14 +36,23 @@ export default class FrontPage extends Component {
     });
   };
 
-  beforeUpload = ({ fileList }) => this.setState({ fileList });
+  beforeUpload = () => {
+    // Teste exemplo
+    this.setState({ formVisible: true, licensePlate: "TE-ST-E0" });
+    message.error('A matrícula da imagem já foi introduzida no sistema!');
+  };
 
-  handleChange = ({ fileList }) => this.setState({ fileList });
+  handleChange = ({fileList}) => {
+    console.log(fileList);
+    this.setState({ fileList })
+  };
 
   handleCancel = () => this.setState({ previewVisible: false });
 
+  hideForm = () => this.setState({ formVisible: false });
+
   render() {
-    const { previewVisible, previewImage, fileList } = this.state;
+    const { previewVisible, previewImage, fileList, formVisible, licensePlate } = this.state;
     const uploadButton = (
       <div>
         <Icon type="plus" />
@@ -51,10 +64,10 @@ export default class FrontPage extends Component {
       <div className="my-dashboard">
         <h1>Bem-vindo ao CartaLog</h1>
         <Upload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          action="/api/cars/plate-detector"
           listType="picture-card"
           fileList={fileList}
-          beforeUpload={beforeUpload}
+          beforeUpload={this.beforeUpload}
           onPreview={this.handlePreview}
           onChange={this.handleChange}
         >
@@ -63,6 +76,7 @@ export default class FrontPage extends Component {
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
+        <CarsCreateForm formVisible={formVisible} licensePlate={licensePlate} onCancel={this.hideForm}></CarsCreateForm>
       </div>
     );
   }
