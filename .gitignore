@@ -10,10 +10,12 @@ package-lock.json
 config/_development.json
 config/_production.json
 
-storage/*
+storage/database/*
+storage/public/car/photos/*.jpg
 trash/*
 dbs/*
 
+*.swp
 *~*
 *#*
 

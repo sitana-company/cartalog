@@ -37,6 +37,33 @@ if (file == null) {
                 .getValues("results")
                 .getValues(0)
                 .getString("plate");
+<<<<<<< HEAD
+=======
+
+            const dbCars = _db.search("carro", { "placa": plate });
+            let isNew = false;
+            let dbCarUid = "";
+            if (dbCars.total == 1) {
+                const dbCar = dbCars.results.get(0);
+                _db.update("carro", dbCar.getInt("carro_id"), {
+                    "foto": file,
+                    "ultima_entrada": _db.timestamp()
+                });
+                dbCarUid = dbCar.getInt("carro_uid");
+                isNew = dbCar.getInt("carro_modelo_id") == 0;
+            } else {
+                const dbCarId = _db.insert("carro", {
+                    "modelo_id": 0,
+                    "placa": plate,
+                    "foto": file,
+                    "ultima_entrada": _db.timestamp()
+                });
+                dbCarUid = _db.get("carro", dbCarId).getString("uid");
+                isNew = true;
+            }
+
+            _out.json({ plate, isNew, uid: dbCarUid });
+>>>>>>> master
         } else {
             _header.status(404);
         }
