@@ -41,7 +41,7 @@ Instale no Docker o container do OpenALPR com o seguinte comando:
 
 `docker build -t openalpr https://github.com/openalpr/openalpr.git`
 
-###### Test
+##### Test
 
 Faça o download da imagem de teste:
 
@@ -51,7 +51,7 @@ E teste o container do OpenALPR:
 
 `docker run -it --rm -v $(pwd):/data:ro openalpr -c eu h786poj.jpg`
 
-###### Mac OS X
+##### Mac OS X
 
 Defina a pasta que vai ser utilizada para processar as fotos com o container do OpenALPR, por exemplo:
 
