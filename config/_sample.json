@@ -1,0 +1,49 @@
+{
+    "name": "cartalog",
+    "language": "pt_PT",
+    "locale": "pt_PT",
+    "url": {
+        "base": "/admin/",
+        "services": "/api/",
+        "public": "/"
+    },
+    "firebase": {
+        "app_name": "",
+        "database_url": "",
+        "key_file": "",
+        "listener_secret": ""
+    },
+    "db": {
+        "default": {
+            "password": "",
+            "engine": "h2",
+            "host": "",
+            "name": "cartalog",
+            "username": ""
+        }
+    },
+    "cron": {
+        "jobs": []
+    },
+    "smtp": {},
+    "setup": {
+        "enabled": true,
+        "schema": {
+            "auto_create": true,
+            "execution": true
+        },
+        "scripts": {
+            "execution": true
+        }
+    },
+    "jwt": {
+        "enabled": true,
+        "secret": "4~5H+JqsuAsdWmnN",
+        "access_expires": 60,
+        "refresh_expires": 1440,
+        "algorithm": "HS512"
+    },
+    "settings": {
+        "public": { }
+    }
+}
