@@ -47,6 +47,7 @@
         "public": { },
         "sms_token": "#####",
         "sms_to": "+351#######",
-        "mail_to": "########@sitana.pt"
+        "mail_to": "########@sitana.pt",
+        "openalpr_temp_path": "/usr/local/openalpr-temp"
     }
 }

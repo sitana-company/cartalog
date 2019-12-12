@@ -8,7 +8,7 @@ if (file == null) {
 } else {
     const uid = _uid.generate();
 
-    const storage = _storage.filesystem("public", "car/photos", uid +".jpg");
+    const storage = _storage.filesystem("public", "cars/photos", `${uid}.jpg`);
     file.save(storage);
 
     let plate = "";
@@ -16,21 +16,22 @@ if (file == null) {
     if (os.isWindows()) {
         plate = "IH786P0J";
     } else {
-        os.directory("/usr/local/temp");
+        const tempPath = _app.settings.getString("openalpr_temp_path");
+
+        os.directory(tempPath);
 
         os.command(
-            "mv " + storage.absolutePath() +
-            " "+ uid +".jpg"
+            `cp ${storage.absolutePath()} ${uid}.jpg`
         );
 
         const result = _val.fromJSON(
             os.command(
-                "docker run --rm -v /usr/local/temp:/data:ro openalpr " +
-                "-c eu --json --ignore_rest "+ uid +".jpg"
+                `docker run --rm -v ${tempPath}:/data:ro openalpr ` +
+                `-c eu --json --ignore_rest ${uid}.jpg`
             ).output()
         );
 
-        os.command("trash-put "+ uid +".jpg");
+        os.command(`rm -f ${uid}.jpg`);
 
         if (!result.isEmpty()) {
             plate = result
@@ -41,7 +42,6 @@ if (file == null) {
             _header.status(404);
         }
     }
-
 
     const dbCars = _db.search("carro", { "placa": plate });
     let isNew = false;
@@ -65,5 +65,10 @@ if (file == null) {
         isNew = true;
     }
 
-    _out.json({ plate, isNew, uid: dbCarUid });
+    _out.json({
+        plate,
+        isNew,
+        uid: dbCarUid,
+        photo: storage.url()
+    });
 }

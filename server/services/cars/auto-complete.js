@@ -1,4 +1,6 @@
-var text = _req.getString("text")
+
+const text = _req.getString("text");
+
 _out.json(
     _db.query(
         "select " +
@@ -11,4 +13,4 @@ _out.json(
         "  or marca.nome like concat(concat('%', ?::varchar), '%') ",
         _val.init().add(text).add(text)
     )
-)
+);

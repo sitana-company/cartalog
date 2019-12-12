@@ -1,4 +1,5 @@
-var query = ""+
+
+const query = ""+
     "select "+
     "  carro.uid, "+
     "  marca.nome as brand, "+
@@ -6,7 +7,7 @@ var query = ""+
     "  carro.placa as plate " +
     "from carro " +
     "  inner join modelo on carro.modelo_id = modelo.id " +
-    "  inner join marca on modelo.marca_id = marca.id"
+    "  inner join marca on modelo.marca_id = marca.id";
 
 _out.json({
         "items": _db.query(
@@ -16,9 +17,7 @@ _out.json({
             "select count(1) as total from ("+ query +") as results"
         ).getInt("total")
     }
-)
-
-
+);
 
 /*
 var columnOrder = ""

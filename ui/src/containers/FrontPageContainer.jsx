@@ -70,7 +70,12 @@ export default class FrontPage extends Component {
       throw response;
     }).then((resp) => {      
       if (resp.isNew) {
-        this.setState({ formVisible: true, licensePlate: resp.plate, carUid: resp.uid });
+        this.setState({
+          formVisible: true,
+          licensePlate: resp.plate,
+          carUid: resp.uid,
+          carPhotoUrl: resp.photo
+        });
         message.success("A matrícula da imagem foi carregada com sucesso!");
       } else {
         message.info("A matrícula já existe!");
@@ -89,7 +94,8 @@ export default class FrontPage extends Component {
       fileList,
       formVisible,
       licensePlate,
-      carUid
+      carUid,
+      carPhotoUrl
     } = this.state;
     const uploadButton = (
       <div>
@@ -132,13 +138,22 @@ export default class FrontPage extends Component {
                   formVisible={formVisible}
                   licensePlate={licensePlate}
                   carUid={carUid}
+                  carPhotoUrl={carPhotoUrl}
                   onCancel={this.hideForm}
                 ></CarsCreateForm>
               </Card>
             </Col>
           </Row>
         </Content>
-        <Footer style={{ background: "#ECECEC", padding: "25px 50px", fontWeight: 500 }}>Netuno ©2019</Footer>
+        <Footer style={{ background: "#ECECEC", padding: "25px 50px", fontWeight: 500 }}>
+          <a href="https://www.netuno.org">Netuno.org</a>
+          &nbsp;
+          by
+          &nbsp;
+          <a href="https://www.sitana.pt">Sitana.pt</a>
+          &nbsp;
+          ©2019
+        </Footer>
       </Layout>
     );
   }

@@ -29,7 +29,7 @@ class CarsCreateForm extends Component {
             }
             throw response;
           }).then((resp) => {
-            message.success('Matrícula adicionada com sucesso!');
+            message.success('Informações atualizadas com sucesso!');
             this.props.onCancel();
           }).catch((error) => {
             //alert("ERROR");
@@ -39,21 +39,23 @@ class CarsCreateForm extends Component {
   };
 
   render() {
-    const { form, formVisible, licensePlate, onCancel } = this.props;
+    const { form, formVisible, licensePlate, onCancel, carPhotoUrl } = this.props;
     const { getFieldDecorator } = form;
 
     return (
       <Modal
-        title="Adicionar nova matricula"
-        width={300}
+        title="Atualizar Dados do Carro"
+        width={400}
         visible={formVisible}
         onCancel={onCancel}
         destroyOnClose={true}
         footer={null}
       >
+        <img src={carPhotoUrl}
+             style={{ width: "auto", height: "auto", maxWidth: "100%", maxHeight: "300px" }} />
         <Form
           layout="vertical"
-          style={{ width: "200px" }}
+          style={{ width: "300px", marginTop: "50px" }}
           onSubmit={this.handleSubmit}
         >
           <Form.Item label="Matrícula">
@@ -74,7 +76,7 @@ class CarsCreateForm extends Component {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Adicionar
+              Guardar
             </Button>
           </Form.Item>
         </Form>

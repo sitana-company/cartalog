@@ -1,3 +1,4 @@
+
 _out.json(
     _db.query(
         "select "+
@@ -11,4 +12,4 @@ _out.json(
         "  ) as total "+
         "from marca"
     )
-)
+);
