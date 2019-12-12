@@ -1,0 +1,60 @@
+/**
+  *
+  *  CODE GENERATED AUTOMATICALLY
+  *
+  *  THIS FILE SHOULD NOT BE EDITED BY HAND
+  *
+  */
+
+_form.createIfNotExists(
+	_val.init()
+	.set("big", false)
+	.set("control_active", true)
+	.set("control_group", false)
+	.set("control_user", false)
+	.set("displayname", "Marca")
+	.set("firebase", "")
+	.set("group_id", 0)
+	.set("id", 2)
+	.set("name", "marca")
+	.set("parent_id", 0)
+	.set("report", false)
+	.set("show_id", true)
+	.set("uid", "9da1f975-7fd8-4d62-b326-fd9f634f0c66")
+	.set("user_id", 0)
+)
+_form.createComponentIfNotExists(
+	"9da1f975-7fd8-4d62-b326-fd9f634f0c66",
+	_val.init()
+	.set("colspan", 0)
+	.set("displayname", "Nome")
+	.set("edit_group_id", 0)
+	.set("edit_user_id", 0)
+	.set("firebase", "")
+	.set("group_id", 0)
+	.set("height", 0)
+	.set("id", 2)
+	.set("max", 0)
+	.set("min", 0)
+	.set("name", "nome")
+	.set("notnull", true)
+	.set("primarykey", true)
+	.set("properties", "{\"MASK_REVERSE\":{\"default\":\"false\",\"type\":\"BOOLEAN\",\"value\":\"false\"},\"MASK_SELECTONFOCUS\":{\"default\":\"false\",\"type\":\"BOOLEAN\",\"value\":\"false\"},\"MASK\":{\"default\":\"\",\"type\":\"STRING\",\"value\":\"\"}}")
+	.set("rowspan", 0)
+	.set("table_id", 2)
+	.set("tdheight", "0")
+	.set("tdwidth", "0")
+	.set("type", "text")
+	.set("uid", "ec061570-4f18-488f-9d0c-efe06564d816")
+	.set("user_id", 0)
+	.set("view_group_id", 0)
+	.set("view_user_id", 0)
+	.set("whenedit", true)
+	.set("whenfilter", true)
+	.set("whennew", true)
+	.set("whenresult", true)
+	.set("whenview", true)
+	.set("width", 0)
+	.set("x", 1)
+	.set("y", 1)
+)
