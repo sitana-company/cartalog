@@ -19,21 +19,23 @@ class CarsCreateForm extends Component {
 
           /// FETCH GUARDAR MATRICULA
         }
-      });
+    });
 
     message.success('Matrícula adicionada com sucesso!');
+    this.props.onCancel();
   };
 
   render() {
     const { form, formVisible, licensePlate, onCancel } = this.props;
     const { getFieldDecorator } = form;
-    console.log(licensePlate);
+
     return (
       <Modal
         title="Adicionar nova matricula"
         width={300}
         visible={formVisible}
         onCancel={onCancel}
+        destroyOnClose={true}
         footer={null}
       >
         <Form layout="vertical" style={{ width: "200px" }} onSubmit={this.handleSubmit}>
@@ -43,7 +45,6 @@ class CarsCreateForm extends Component {
               rules: [
                 {
                   required: true,
-                  message: "Please input the title of collection!"
                 }
               ]
             })(<Input disabled />)}
@@ -55,7 +56,7 @@ class CarsCreateForm extends Component {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Enviar
+              Adicionar
             </Button>
           </Form.Item>
         </Form>
