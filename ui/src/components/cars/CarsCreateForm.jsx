@@ -15,14 +15,28 @@ class CarsCreateForm extends Component {
 
     this.props.form.validateFields((err, values) => {
         if (!err) {
+          alert("nenhum erro");
           console.log('Received values of form: ', values);
+          const data = new FormData();
+          data.append('uid', this.props.carUid);
+          data.append('modelo_id', values.modelo_id);
 
-          /// FETCH GUARDAR MATRICULA
+          fetch('/api/cars/update', {
+            method: 'POST',
+            body: data
+          }).then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw response;
+          }).then((resp) => {
+            message.success('Matrícula adicionada com sucesso!');
+            this.props.onCancel();
+          }).catch((error) => {
+            alert("ERROR");
+          });
         }
     });
-
-    message.success('Matrícula adicionada com sucesso!');
-    this.props.onCancel();
   };
 
   render() {
@@ -38,21 +52,30 @@ class CarsCreateForm extends Component {
         destroyOnClose={true}
         footer={null}
       >
-        <Form layout="vertical" style={{ width: "200px" }} onSubmit={this.handleSubmit}>
+        <Form
+          layout="vertical"
+          style={{ width: "200px" }}
+          onSubmit={this.handleSubmit}
+        >
           <Form.Item label="Matrícula">
             {getFieldDecorator("car_license_plate", {
               initialValue: licensePlate,
               rules: [
                 {
-                  required: true,
+                  required: true
                 }
               ]
             })(<Input disabled />)}
           </Form.Item>
           <Form.Item label="Modelo">
-            {getFieldDecorator("car_model")(
-              <CarsAutoComplete></CarsAutoComplete>
-            )}
+            {getFieldDecorator("modelo_id", {
+              rules: [
+                {
+                  required: true,
+                  message: "Por favor escolha o modelo do carro!"
+                }
+              ]
+            })(<CarsAutoComplete></CarsAutoComplete>)}
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -65,4 +88,4 @@ class CarsCreateForm extends Component {
   }
 }
 
-export default Form.create({ name: "form_add_license_plate" })(CarsCreateForm);
+export default Form.create()(CarsCreateForm);

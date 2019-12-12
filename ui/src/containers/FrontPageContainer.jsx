@@ -47,12 +47,6 @@ export default class FrontPage extends Component {
     });
   };
 
-  beforeUpload = () => {
-    // Teste exemplo
-    this.setState({ formVisible: true, licensePlate: "TE-ST-E0" });
-    message.error("A matrícula da imagem já foi introduzida no sistema!");
-  };
-
   handleChange = ({ fileList }) => {
     console.log(fileList);
     this.setState({ fileList });
@@ -62,13 +56,34 @@ export default class FrontPage extends Component {
 
   hideForm = () => this.setState({ formVisible: false });
 
+  customRequest = ({onSuccess, onError, file}) => {
+    const data = new FormData();
+    data.append('file', file);
+
+    fetch('/api/cars/plate-detector', {
+      method: 'POST',
+      'content-type': 'multipart/form-data',
+      body: data
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw response;
+    }).then((resp) => {
+      this.setState({ formVisible: true, licensePlate: "TE-ST-E0", carUid: "testeuid" });
+      message.error("A matrícula da imagem foi carregada com sucesso!");
+      onSuccess(resp, file);
+    }).catch(onError);
+  }
+
   render() {
     const {
       previewVisible,
       previewImage,
       fileList,
       formVisible,
-      licensePlate
+      licensePlate,
+      carUid
     } = this.state;
     const uploadButton = (
       <div>
@@ -79,17 +94,18 @@ export default class FrontPage extends Component {
 
     return (
       <Layout>
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>Header</Header>
+        <Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: 0 }}><img style={{ height: "100%", padding: "10px" }} src={"./images/logo-main.png"}></img></Header>
         <Content style={{ padding: '0 20px', marginTop: 64, minHeight: "calc(100vh - 135px)"}}>
           <Row style={{ padding: "30px 0px" }}>
             <Col xs={{span: 24}} sm={{span: 24}} md={{span: 10, offset: 8}} >
               <Card title={<h1>Bem-vindo ao CartaLog</h1>} bordered={false}>
                 <Upload
-                  accept="image/png,image/jpg"
-                  action="/api/cars/plate-detector"
+                  customRequest={this.customRequest}
+                  accept="image/*"
+                  //action="/api/cars/plate-detector"
                   listType="picture-card"
                   fileList={fileList}
-                  beforeUpload={this.beforeUpload}
+                  //beforeUpload={this.beforeUpload}
                   onPreview={this.handlePreview}
                   onChange={this.handleChange}
                 >
@@ -109,6 +125,7 @@ export default class FrontPage extends Component {
                 <CarsCreateForm
                   formVisible={formVisible}
                   licensePlate={licensePlate}
+                  carUid={carUid}
                   onCancel={this.hideForm}
                 ></CarsCreateForm>
               </Card>

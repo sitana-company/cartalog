@@ -44,6 +44,9 @@
         "algorithm": "HS512"
     },
     "settings": {
-        "public": { }
+        "public": { },
+        "sms_token": "#####",
+        "sms_to": "+351#######",
+        "mail_to": "########@sitana.pt"
     }
 }
