@@ -1,6 +1,6 @@
-class SMS {
-    constructor() {
-        this.car_uid = 0;
+class Mail {
+    constructor(car_uid) {
+        this.car = _db.get("carro", car_uid);
     }
   
     send() {
@@ -9,35 +9,43 @@ class SMS {
         smtp.to = _app.settings.getString("mail_to");
     
         smtp.subject = "A sua matricula foi registada.";
-        smtp.text = "A matrícula " + plate + " foi registada na CartaLog.";
+        smtp.text = "";
+        smtp.text = `
+        A matrícula <b>${this.car.getString('placa')}</b> foi registada na CartaLog.
+        `;      
         
-        smtp.html = "<div>"
-        smtp.html += "<img src=\"cid:logo\" width=\"200\" />"
-        smtp.html += "<p>A matrícula " + plate + " foi registada na CartaLog.</p>"
-        smtp.html += "</div>"
+        smtp.html = `
+        <style>
+          table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          }
+          th, td, img {
+          padding: 5px;
+          }
+        </style>
+        <div style="padding: 50px; background: #001529;">
+            <img src="cid:logo" width="300" />
+            <div style="padding: 30px;"></div>
+            <div style="padding: 40px; background: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+               <h2>${smtp.subject}</h2>
+               <p style="font-size: 14px;">${smtp.text}</p>
+            </div>
+        </div>
+        `;      
         
         smtp.attachment(
             "logo.png",
             "image/png",
-            _storage.filesystem("server", "samples/mail", "logo.png").file(),
+            _storage.filesystem("server", "logo.png").file(),
             "logo"
-        )
-        
-        smtp.attachment(
-            "doc.text",
-            "text/plain",
-            _storage.filesystem("server", "samples/mail", "doc.txt").file()
-        )
-        
+        );
+
         if (smtp.enabled) {
             smtp.send()
-            _out.println("<h2>Mail sent...</h2>")
         } else {
-            _out.println("<h2>The SMTP configuration is disabled!</h2>")
-            _out.println("<p>Please define your configurations and enable it.</p>")
+            _log.warn("The SMTP configuration is disabled!");
         }
-
-        _out.json(true);
     }
   }
   

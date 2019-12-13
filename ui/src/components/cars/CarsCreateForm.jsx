@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Modal, Form, Input, Button, message } from "antd";
+import { Modal, Form, Input, Button, message, Icon, Spin } from "antd";
 import CarsAutoComplete from "./CarsAutoComplete.jsx";
+
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class CarsCreateForm extends Component {
   constructor(props) {
@@ -16,6 +18,8 @@ class CarsCreateForm extends Component {
     this.props.form.validateFields((err, values) => {
         if (!err) {
           //console.log('Received values of form: ', values);
+          this.setState({ loading: true });
+
           const data = new FormData();
           data.append('carro_uid', this.props.carUid);
           data.append('modelo_uid', this.state.modelUid);
@@ -29,9 +33,11 @@ class CarsCreateForm extends Component {
             }
             throw response;
           }).then((resp) => {
+            this.setState({ loading: false });
             message.success('Informações atualizadas com sucesso!');
             this.props.onCancel();
           }).catch((error) => {
+            this.setState({ loading: false });
             //alert("ERROR");
           });
         }
@@ -41,6 +47,7 @@ class CarsCreateForm extends Component {
   render() {
     const { form, formVisible, licensePlate, onCancel, carPhotoUrl } = this.props;
     const { getFieldDecorator } = form;
+    let { loading } = this.state;
 
     return (
       <Modal
@@ -75,9 +82,9 @@ class CarsCreateForm extends Component {
             } }/>)}
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            {!loading ? (<Button type="primary" htmlType="submit">
               Guardar
-            </Button>
+            </Button>) : <Spin indicator={antIcon} />}
           </Form.Item>
         </Form>
       </Modal>

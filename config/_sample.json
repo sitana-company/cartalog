@@ -25,7 +25,17 @@
     "cron": {
         "jobs": []
     },
-    "smtp": {},
+    "smtp": {
+        "default": {
+            "enabled": true,
+            "host": "#####.mailserver.org",
+            "port": 465,
+            "ssl": true,
+            "from": "noreply@website.org",
+            "username": "noreply@website.org",
+            "password": "###password###"
+        }
+    },
     "setup": {
         "enabled": true,
         "schema": {
